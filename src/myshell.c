@@ -23,11 +23,72 @@ int main(int argc, char **argv)
     char ** arg = NULL;                               // working pointer thru args
     char cwd[256];                             // used in the cd command and pwd command
     char * prompt = " --> " ;                   // shell prompt
+    // FILE *input_file = stdin;
+    // FILE *output_file = stdout;
 
 // Checks for file
     if(argc == 2) {
         batchfile(argv, args, buff, arg);
     }
+
+
+// I/O redirection
+    // for (int i = 1; i < argc - 1; i++) {
+    //     if (!strcmp(argv[i], "<")) {
+    //         input_file = fopen(argv[i+1], "r");
+    //         if (!input_file) {
+    //             printf("Failed to open input file, exiting\n");
+    //             exit(1);
+    //         }
+    //         i++;
+    //     }
+    //     else if (!strcmp(argv[i], ">")) {
+    //         output_file = fopen(argv[i+1], "w");
+    //         if (!output_file) {
+    //             printf("Failed to open output file, exiting\n");
+    //             exit(1);
+    //         }
+    //         i++;
+    //     } else if (!strcmp(argv[i], ">>")) {
+    //         output_file = fopen(argv[i+1], "a");
+    //         if (!output_file) {
+    //             printf("Failed to open output file, exiting\n");
+    //             exit(1);
+    //         }
+    //         i++;
+    //     }
+    // }
+
+    // Redirects the input and output files to location, gets file descriptors with fileno, dup2 then redirects the files
+//    int input_file_var = fileno(input_file);
+//     int output_file_var = fileno(output_file);
+
+    // Redirect input and output to the specified files
+    // if (dup2(input_file_var, STDIN_FILENO) == -1) {
+    //     printf("Failed to redirect input, exiting\n");
+    //     exit(1);
+    // }
+    // if (dup2(output_file_var, STDOUT_FILENO) == -1) {
+    //     perror("Failed to redirect output, exiting\n");
+    //     exit(1);
+    // }
+
+    // // close unnecessary file descriptors
+    // if (input_file_var != STDIN_FILENO) {
+    //     close(input_file_var);
+    // }
+    // if (output_file_var != STDOUT_FILENO) {
+    //     close(output_file_var);
+    // }
+
+    // Reads from command line input and puts to output file then
+    // while (fgets(buff, sizeof(buff), stdin)) {
+    //     fputs(buff, stdout);
+    // }
+
+    // closeing the input and output files
+    // fclose(input_file);
+    // fclose(output_file);
 
 
     while(!feof(stdin))
