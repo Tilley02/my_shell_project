@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <libgen.h>
+#include <libgen.h> //For getting the last directory of the path for the prompt
 #include "command.h"
 
 #define MAX_BUFFER 1024                        // max line buffer
@@ -15,7 +15,6 @@
 // Initializing functions
 void parse_input(char **args, char **arg, char *buff);
 void batchfile(char **argv, char **args, char *buff, char **arg);
-
 
 int main(int argc, char **argv)
 {
@@ -29,44 +28,41 @@ int main(int argc, char **argv)
     if(argc == 2) {
         batchfile(argv, args, buff, arg);
     }
-    else {
-        while(!feof(stdin))
-        {
-            getcwd(cwd, sizeof(cwd));
-            char *dir = basename(cwd); // basename is in the libgen library, gets the last directory to use for prompt
-            printf("%s%s", dir, prompt);
-            // Initializing arguments
-            for (int i = 0; i < MAX_ARGS; i++) {
-                args[i] = NULL;
-            }
+
+
+    while(!feof(stdin))
+    {
+        getcwd(cwd, sizeof(cwd));
+        char *dir = basename(cwd); // basename is in the libgen library, gets the last directory to use for prompt
+        printf("%s%s", dir, prompt);
+        // Initializing arguments
+        for (int i = 0; i < MAX_ARGS; i++) {
+            args[i] = NULL;
+        }
 
 // Parses input from command line then gives them to main_command functions which checks it for commands
-            if(fgets(buff, MAX_BUFFER, stdin)) {
-                parse_input(args, arg, buff);
-                if(args[0]) {
-                    // If cannot be found breaks loop and exits
-                    if(main_command(args)==0) {
-                        break;
-                    }
-                    // Otherwise continue
-                    else {
-                        continue;
-                    }
+        if(fgets(buff, MAX_BUFFER, stdin)) {
+            parse_input(args, arg, buff);
+            if(args[0]) {
+                // If cannot be found breaks loop and exits
+                if(main_command(args)==0) {
+                    break;
+                }
+                // Otherwise continue
+                else {
+                    continue;
+                }
 
-                    arg = args;
-                    while (*arg) {
-                        fprintf(stdout,"%s ",*arg++);
-                        fputs ("\n", stdout);
+                arg = args;
+                while (*arg) {
+                    fprintf(stdout,"%s ",*arg++);
+                    fputs ("\n", stdout);
 
-                    }
                 }
             }
         }
     }
-    return 0;
 }
-
-
 
 // Parses the command line into arguments like argv for the command line to read
 void parse_input(char **args, char **arg, char *buff) {
