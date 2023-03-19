@@ -58,7 +58,7 @@ int main_command(char **args) {
    }
 
    else if (!strcmp(args[0], "pause")) {
-      pause_shell();
+      pause();
       return 1;
    }
 
