@@ -25,7 +25,7 @@ void cd(char **args) {
 }
 
 // Clear clears the users terminal, error handeling for fork in it
-void clear() {
+void clr() {
       pid = fork();
       if (pid == -1) {
          perror("Fork failed");

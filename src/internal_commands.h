@@ -4,7 +4,7 @@
 
 // Internal commands that are run in my shell
 void cd(char **args);
-void clear();
+void clr();
 void dir();
 void environment();
 void get_env(char **args);

@@ -23,6 +23,7 @@ int main(int argc, char **argv)
     char ** arg = NULL;                               // working pointer thru args
     char cwd[256];                             // used in the cd command and pwd command
     char * prompt = " --> " ;                   // shell prompt
+    int background_checker = 0;
     // FILE *input_file = stdin;
     // FILE *output_file = stdout;
 
@@ -105,6 +106,25 @@ int main(int argc, char **argv)
         if(fgets(buff, MAX_BUFFER, stdin)) {
             parse_input(args, arg, buff);
             if(args[0]) {
+                
+                if (arg > args && arg[-1][strlen(arg[-1]) - 1] == '&') {
+                    arg[-1][strlen(arg[-1]) - 1] = '\0';
+                    background_checker = 1; // If this is changed to one process gets forked and user is returned back to 
+                                            // Prompt where they can enter another command while the other runs in the back
+                }
+
+                if (args[0] && background_checker) {
+                    pid_t pid = fork();
+                    if (pid == -1) {
+                        printf("Fork failed\n");
+                    }
+                    else if (pid == 0) {
+                        execvp(args[0], args);
+                        printf("Fork faile, exiting\n");
+                        exit(1);
+                    }
+                }
+
                 // If cannot be found breaks loop and exits
                 if(main_command(args)==0) {
                     break;

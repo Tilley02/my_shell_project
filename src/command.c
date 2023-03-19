@@ -21,8 +21,8 @@ int main_command(char **args) {
       return 1;
    }
 
-   else if (!strcmp(args[0], "clear")) {
-      clear();
+   else if (!strcmp(args[0], "clr")) {
+      clr();
       return 1;
    }
 
@@ -58,7 +58,7 @@ int main_command(char **args) {
    }
 
    else if (!strcmp(args[0], "pause")) {
-      pause();
+      pause_shell();
       return 1;
    }
 
